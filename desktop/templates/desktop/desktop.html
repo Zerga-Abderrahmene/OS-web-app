@@ -1,0 +1,304 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FakeOS Desktop</title>
+  <link rel="stylesheet" href="{% static 'desktop/style.css' %}">
+  <script src="{% static 'desktop/desktop.js' %}" defer></script>
+</head>
+<body>
+  <div id="desktop">
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" data-app="notes">
+        <div class="icon">📝</div>
+        <div class="label">Notes</div>
+      </div>
+      <div class="desktop-icon" data-app="calculator">
+        <div class="icon">🧮</div>
+        <div class="label">Calculator</div>
+      </div>
+      <div class="desktop-icon" data-app="files">
+        <div class="icon">📁</div>
+        <div class="label">Files</div>
+      </div>
+      <div class="desktop-icon" data-app="settings">
+        <div class="icon">⚙️</div>
+        <div class="label">Settings</div>
+      </div>
+      <div class="desktop-icon" data-app="chrome">
+        <div class="icon">🌐</div>
+        <div class="label">Chrome</div>
+      </div>
+    </div>
+
+    <!-- Windows -->
+    <div class="window" id="notes-window" style="display: none;">
+      <div class="titlebar">
+        <div class="title">📝 Notes</div>
+        <div class="window-controls">
+          <button class="minimize">─</button>
+          <button class="maximize">□</button>
+          <button class="close">×</button>
+        </div>
+      </div>
+      <div class="content">
+        <textarea placeholder="Write your notes here..." rows="15"></textarea>
+      </div>
+    </div>
+
+    <div class="window" id="calculator-window" style="display: none;">
+      <div class="titlebar">
+        <div class="title">🧮 Calculator</div>
+        <div class="window-controls">
+          <button class="minimize">─</button>
+          <button class="maximize">□</button>
+          <button class="close">×</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="calculator">
+          <div class="display">0</div>
+          <div class="buttons">
+            <button class="calc-btn" data-action="clear">C</button>
+            <button class="calc-btn" data-action="backspace">⌫</button>
+            <button class="calc-btn" data-action="operator">÷</button>
+            <button class="calc-btn" data-action="operator">×</button>
+            <button class="calc-btn" data-action="number">7</button>
+            <button class="calc-btn" data-action="number">8</button>
+            <button class="calc-btn" data-action="number">9</button>
+            <button class="calc-btn" data-action="operator">-</button>
+            <button class="calc-btn" data-action="number">4</button>
+            <button class="calc-btn" data-action="number">5</button>
+            <button class="calc-btn" data-action="number">6</button>
+            <button class="calc-btn" data-action="operator">+</button>
+            <button class="calc-btn" data-action="number">1</button>
+            <button class="calc-btn" data-action="number">2</button>
+            <button class="calc-btn" data-action="number">3</button>
+            <button class="calc-btn" data-action="equals" rowspan="2">=</button>
+            <button class="calc-btn" data-action="number" colspan="2">0</button>
+            <button class="calc-btn" data-action="decimal">.</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="files-window" style="display: none;">
+      <div class="titlebar">
+        <div class="title">📁 File Manager</div>
+        <div class="window-controls">
+          <button class="minimize">─</button>
+          <button class="maximize">□</button>
+          <button class="close">×</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="file-manager">
+          <div class="toolbar">
+            <button class="file-btn">New Folder</button>
+            <button class="file-btn">New File</button>
+            <button class="file-btn">Delete</button>
+          </div>
+          <div class="file-list">
+            <div class="file-item">
+              <span class="file-icon">📄</span>
+              <span class="file-name">document.txt</span>
+            </div>
+            <div class="file-item">
+              <span class="file-icon">📁</span>
+              <span class="file-name">Documents</span>
+            </div>
+            <div class="file-item">
+              <span class="file-icon">🖼️</span>
+              <span class="file-name">image.jpg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="settings-window" style="display: none;">
+      <div class="titlebar">
+        <div class="title">⚙️ Settings</div>
+        <div class="window-controls">
+          <button class="minimize">─</button>
+          <button class="maximize">□</button>
+          <button class="close">×</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="settings">
+          <h3>System Settings</h3>
+          <div class="setting-item">
+            <label>Theme:</label>
+            <select id="theme-select">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="blue">Blue</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label>Volume:</label>
+            <input type="range" id="volume-slider" min="0" max="100" value="50">
+          </div>
+          <div class="setting-item">
+            <label>Auto-save:</label>
+            <input type="checkbox" id="autosave" checked>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="chrome-window" style="display: none;">
+      <div class="titlebar">
+        <div class="title">🌐 Google Chrome</div>
+        <div class="window-controls">
+          <button class="minimize">─</button>
+          <button class="maximize">□</button>
+          <button class="close">×</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="browser">
+          <div class="browser-toolbar">
+            <div class="browser-controls">
+              <button class="browser-btn" data-action="back">←</button>
+              <button class="browser-btn" data-action="forward">→</button>
+              <button class="browser-btn" data-action="refresh">🔄</button>
+            </div>
+            <div class="address-bar">
+              <input type="text" id="url-input" placeholder="Search Google or enter a website name" value="https://www.google.com">
+              <button class="go-btn" data-action="go">Go</button>
+              <button class="bookmark-btn" data-action="bookmark">⭐</button>
+            </div>
+            <div class="browser-tabs">
+              <div class="tab active" data-tab="google">
+                <span class="tab-icon">🌐</span>
+                <span class="tab-title">Google</span>
+                <button class="tab-close">×</button>
+              </div>
+              <button class="new-tab-btn">+</button>
+            </div>
+          </div>
+          <div class="browser-content">
+            <div class="tab-content active" id="google-tab">
+              <div class="search-page">
+                <div class="google-logo">Google</div>
+                <div class="search-box">
+                  <input type="text" id="search-input" placeholder="Search Google">
+                  <button id="search-btn">Search</button>
+                </div>
+                <div class="search-results" id="search-results"></div>
+                <div class="quick-links">
+                  <h3>Quick Links</h3>
+                  <div class="quick-links-grid">
+                    <div class="quick-link" data-url="https://www.youtube.com">
+                      <span class="quick-link-icon">🎥</span>
+                      <span class="quick-link-text">YouTube</span>
+                    </div>
+                    <div class="quick-link" data-url="https://www.github.com">
+                      <span class="quick-link-icon">💻</span>
+                      <span class="quick-link-text">GitHub</span>
+                    </div>
+                    <div class="quick-link" data-url="https://www.wikipedia.org">
+                      <span class="quick-link-icon">📚</span>
+                      <span class="quick-link-text">Wikipedia</span>
+                    </div>
+                    <div class="quick-link" data-url="https://www.reddit.com">
+                      <span class="quick-link-icon">🤖</span>
+                      <span class="quick-link-text">Reddit</span>
+                    </div>
+                    <div class="quick-link" data-url="https://www.stackoverflow.com">
+                      <span class="quick-link-icon">❓</span>
+                      <span class="quick-link-text">Stack Overflow</span>
+                    </div>
+                    <div class="quick-link" data-url="https://www.weather.com">
+                      <span class="quick-link-icon">🌤️</span>
+                      <span class="quick-link-text">Weather</span>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="youtube-tab">
+              <div class="youtube-page">
+                <h2>YouTube</h2>
+                <div class="video-grid">
+                  <div class="video-item">
+                    <div class="video-thumbnail">🎥</div>
+                    <div class="video-title">Amazing Video Title</div>
+                    <div class="video-channel">Channel Name</div>
+                  </div>
+                  <div class="video-item">
+                    <div class="video-thumbnail">🎥</div>
+                    <div class="video-title">Another Great Video</div>
+                    <div class="video-channel">Another Channel</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="webpage-tab">
+              <div id="webpage-content" style="width: 100%; height: 100%; overflow: auto; padding: 20px; background: white;">
+                <div id="loading-indicator" style="display: none; text-align: center; padding: 50px;">
+                  <div style="font-size: 24px; margin-bottom: 20px;">Loading...</div>
+                  <div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                </div>
+                <div id="error-message" style="display: none; text-align: center; padding: 50px; color: #e74c3c;">
+                  <div style="font-size: 24px; margin-bottom: 20px;">⚠️ Error Loading Page</div>
+                  <div id="error-details"></div>
+                  <button onclick="fakeOS.retryLoad()" style="margin-top: 20px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Retry</button>
+                </div>
+                <div id="page-content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div id="taskbar">
+      <div class="start-button" id="start-btn">🟢</div>
+      <div class="taskbar-apps" id="taskbar-apps"></div>
+      <div class="system-tray">
+        <span class="time" id="clock">12:00</span>
+        <span class="volume">🔊</span>
+      </div>
+    </div>
+
+    <!-- Start Menu -->
+    <div id="start-menu" style="display: none;">
+      <div class="start-menu-content">
+        <div class="start-menu-item" data-app="notes">
+          <span class="menu-icon">📝</span>
+          <span class="menu-label">Notes</span>
+        </div>
+        <div class="start-menu-item" data-app="calculator">
+          <span class="menu-icon">🧮</span>
+          <span class="menu-label">Calculator</span>
+        </div>
+        <div class="start-menu-item" data-app="files">
+          <span class="menu-icon">📁</span>
+          <span class="menu-label">File Manager</span>
+        </div>
+        <div class="start-menu-item" data-app="settings">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-label">Settings</span>
+        </div>
+        <div class="start-menu-item" data-app="chrome">
+          <span class="menu-icon">🌐</span>
+          <span class="menu-label">Google Chrome</span>
+        </div>
+        <div class="start-menu-separator"></div>
+        <div class="start-menu-item" data-action="shutdown">
+          <span class="menu-icon">⏻</span>
+          <span class="menu-label">Shutdown</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
